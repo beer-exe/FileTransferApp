@@ -1,0 +1,331 @@
+{
+  "Version": 1,
+  "Hash": "tyL6bN6enn2Rq1Kp9AknIox8uMvNelZZ43qAAfUPRoQ=",
+  "Source": "FileTransferApp",
+  "BasePath": "_content/FileTransferApp",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "FileTransferApp\\wwwroot",
+      "Source": "FileTransferApp",
+      "ContentRoot": "D:\\FileTransferApp\\wwwroot\\",
+      "BasePath": "_content/FileTransferApp",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\FileTransferApp\\wwwroot\\index.html",
+      "SourceId": "FileTransferApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\FileTransferApp\\wwwroot\\",
+      "BasePath": "_content/FileTransferApp",
+      "RelativePath": "index#[.{fingerprint}]?.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "spz8td7j3k",
+      "Integrity": "0Ccjgqa5ELgK4MtgkcYvngBN/UUCCNV1npC5btLJ5Rk=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    },
+    {
+      "Identity": "D:\\FileTransferApp\\wwwroot\\script.js",
+      "SourceId": "FileTransferApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\FileTransferApp\\wwwroot\\",
+      "BasePath": "_content/FileTransferApp",
+      "RelativePath": "script#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "l0vu34pord",
+      "Integrity": "ewS1uqE8SAmEqB6iKi68+IfccM2CDmNVu6whoTX3AxE=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\script.js"
+    },
+    {
+      "Identity": "D:\\FileTransferApp\\wwwroot\\styles.css",
+      "SourceId": "FileTransferApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\FileTransferApp\\wwwroot\\",
+      "BasePath": "_content/FileTransferApp",
+      "RelativePath": "styles#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "oebgedw6g3",
+      "Integrity": "QMDPS97/g37TQ6VQ0AclMsESuVAMTVviaLJYGmZhsao=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\styles.css"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "index.html",
+      "AssetFile": "D:\\FileTransferApp\\wwwroot\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "691"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"0Ccjgqa5ELgK4MtgkcYvngBN/UUCCNV1npC5btLJ5Rk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 04 Apr 2025 13:46:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-0Ccjgqa5ELgK4MtgkcYvngBN/UUCCNV1npC5btLJ5Rk="
+        }
+      ]
+    },
+    {
+      "Route": "index.spz8td7j3k.html",
+      "AssetFile": "D:\\FileTransferApp\\wwwroot\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "691"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"0Ccjgqa5ELgK4MtgkcYvngBN/UUCCNV1npC5btLJ5Rk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 04 Apr 2025 13:46:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "spz8td7j3k"
+        },
+        {
+          "Name": "label",
+          "Value": "index.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-0Ccjgqa5ELgK4MtgkcYvngBN/UUCCNV1npC5btLJ5Rk="
+        }
+      ]
+    },
+    {
+      "Route": "script.js",
+      "AssetFile": "D:\\FileTransferApp\\wwwroot\\script.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3648"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ewS1uqE8SAmEqB6iKi68+IfccM2CDmNVu6whoTX3AxE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 03 Apr 2025 17:23:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ewS1uqE8SAmEqB6iKi68+IfccM2CDmNVu6whoTX3AxE="
+        }
+      ]
+    },
+    {
+      "Route": "script.l0vu34pord.js",
+      "AssetFile": "D:\\FileTransferApp\\wwwroot\\script.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3648"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ewS1uqE8SAmEqB6iKi68+IfccM2CDmNVu6whoTX3AxE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 03 Apr 2025 17:23:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "l0vu34pord"
+        },
+        {
+          "Name": "label",
+          "Value": "script.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ewS1uqE8SAmEqB6iKi68+IfccM2CDmNVu6whoTX3AxE="
+        }
+      ]
+    },
+    {
+      "Route": "styles.css",
+      "AssetFile": "D:\\FileTransferApp\\wwwroot\\styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1167"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"QMDPS97/g37TQ6VQ0AclMsESuVAMTVviaLJYGmZhsao=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 04 Apr 2025 13:51:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-QMDPS97/g37TQ6VQ0AclMsESuVAMTVviaLJYGmZhsao="
+        }
+      ]
+    },
+    {
+      "Route": "styles.oebgedw6g3.css",
+      "AssetFile": "D:\\FileTransferApp\\wwwroot\\styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1167"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"QMDPS97/g37TQ6VQ0AclMsESuVAMTVviaLJYGmZhsao=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 04 Apr 2025 13:51:14 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "oebgedw6g3"
+        },
+        {
+          "Name": "label",
+          "Value": "styles.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-QMDPS97/g37TQ6VQ0AclMsESuVAMTVviaLJYGmZhsao="
+        }
+      ]
+    }
+  ]
+}

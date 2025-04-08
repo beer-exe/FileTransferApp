@@ -1,0 +1,11 @@
+E:\FileTransferApp\obj\Release\net8.0\PubTmp\Out\FileTransferApp.exe
+E:\FileTransferApp\obj\Release\net8.0\PubTmp\Out\appsettings.Development.json
+E:\FileTransferApp\obj\Release\net8.0\PubTmp\Out\appsettings.json
+E:\FileTransferApp\obj\Release\net8.0\PubTmp\Out\FileTransferApp.dll
+E:\FileTransferApp\obj\Release\net8.0\PubTmp\Out\FileTransferApp.deps.json
+E:\FileTransferApp\obj\Release\net8.0\PubTmp\Out\FileTransferApp.runtimeconfig.json
+E:\FileTransferApp\obj\Release\net8.0\PubTmp\Out\FileTransferApp.pdb
+E:\FileTransferApp\obj\Release\net8.0\PubTmp\Out\Microsoft.OpenApi.dll
+E:\FileTransferApp\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
+E:\FileTransferApp\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
+E:\FileTransferApp\obj\Release\net8.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll

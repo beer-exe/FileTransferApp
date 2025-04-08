@@ -1,0 +1,40 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/FileTransferApp/index.html">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-0Ccjgqa5ELgK4MtgkcYvngBN/UUCCNV1npC5btLJ5Rk="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"691"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u00220Ccjgqa5ELgK4MtgkcYvngBN/UUCCNV1npC5btLJ5Rk=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Apr 2025 13:46:14 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/FileTransferApp/index.spz8td7j3k.html">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"spz8td7j3k"},{"Name":"integrity","Value":"sha256-0Ccjgqa5ELgK4MtgkcYvngBN/UUCCNV1npC5btLJ5Rk="},{"Name":"label","Value":"_content/FileTransferApp/index.html"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"691"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u00220Ccjgqa5ELgK4MtgkcYvngBN/UUCCNV1npC5btLJ5Rk=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Apr 2025 13:46:14 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/FileTransferApp/script.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\script.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-ewS1uqE8SAmEqB6iKi68\u002BIfccM2CDmNVu6whoTX3AxE="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"3648"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022ewS1uqE8SAmEqB6iKi68\u002BIfccM2CDmNVu6whoTX3AxE=\u0022"},{"Name":"Last-Modified","Value":"Thu, 03 Apr 2025 17:23:10 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/FileTransferApp/script.l0vu34pord.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\script.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"l0vu34pord"},{"Name":"integrity","Value":"sha256-ewS1uqE8SAmEqB6iKi68\u002BIfccM2CDmNVu6whoTX3AxE="},{"Name":"label","Value":"_content/FileTransferApp/script.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"3648"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022ewS1uqE8SAmEqB6iKi68\u002BIfccM2CDmNVu6whoTX3AxE=\u0022"},{"Name":"Last-Modified","Value":"Thu, 03 Apr 2025 17:23:10 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/FileTransferApp/styles.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\styles.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-QMDPS97/g37TQ6VQ0AclMsESuVAMTVviaLJYGmZhsao="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"1167"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022QMDPS97/g37TQ6VQ0AclMsESuVAMTVviaLJYGmZhsao=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Apr 2025 13:51:14 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/FileTransferApp/styles.oebgedw6g3.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\styles.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"oebgedw6g3"},{"Name":"integrity","Value":"sha256-QMDPS97/g37TQ6VQ0AclMsESuVAMTVviaLJYGmZhsao="},{"Name":"label","Value":"_content/FileTransferApp/styles.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1167"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022QMDPS97/g37TQ6VQ0AclMsESuVAMTVviaLJYGmZhsao=\u0022"},{"Name":"Last-Modified","Value":"Fri, 04 Apr 2025 13:51:14 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+  </ItemGroup>
+</Project>
