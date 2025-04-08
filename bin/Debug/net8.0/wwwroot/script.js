@@ -1,3 +1,5 @@
+const API_BASE = 'http://171.248.83.156:5000/api/files';
+
 async function uploadFile() {
     let fileInput = document.getElementById('fileInput').files[0];
     if (!fileInput) {
@@ -21,7 +23,7 @@ async function uploadFile() {
         let end = Math.min(start + chunkSize, fileInput.size);
         let chunk = fileInput.slice(start, end);
 
-        let checkResponse = await fetch(`http://171.248.83.156:5000/api/files/upload/check-chunk?fileName=${fileName}&chunkIndex=${chunkIndex}`);
+        let checkResponse = await fetch(`${API_BASE}/upload/check-chunk?fileName=${fileName}&chunkIndex=${chunkIndex}`);
         let checkResult = await checkResponse.json();
 
         if (checkResult.exists) {
@@ -41,7 +43,7 @@ async function uploadFile() {
 
         while (!uploadSuccess && retries > 0) {
             try {
-                let response = await fetch("http://171.248.83.156:5000/api/files/upload/upload-chunk", {
+                let response = await fetch(API_BASE+"/upload/upload-chunk", {
                     method: "POST",
                     body: formData
                 });
@@ -50,7 +52,9 @@ async function uploadFile() {
                     let result = await response.json();
                     console.log(result.message);
                     uploadSuccess = true;
-                } else {
+                }
+                else
+                {
                     throw new Error("Upload chunk lỗi, thử lại...");
                 }
             } catch (error) {
@@ -71,7 +75,7 @@ async function uploadFile() {
     mergeFormData.append("fileName", fileName);
     mergeFormData.append("totalChunks", totalChunks);
 
-    let mergeResponse = await fetch("http://171.248.83.156:5000/api/files/upload/merge-chunks", {
+    let mergeResponse = await fetch(API_BASE+"/upload/merge-chunks", {
         method: "POST",
         body: mergeFormData
     });
@@ -87,7 +91,7 @@ async function downloadFile() {
         return;
     }
 
-    let checkUrl = `http://171.248.83.156:5000/api/files/download/check-file/${fileName}`;
+    let checkUrl = `${API_BASE}/download/check-file/${fileName}`;
     let response = await fetch(checkUrl);
 
     if (!response.ok) {
@@ -96,5 +100,5 @@ async function downloadFile() {
         return;
     }
 
-    window.location.href = `http://171.248.83.156:5000/api/files/download/download-file/${fileName}`;
+    window.location.href = `${API_BASE}/download/download-file/${fileName}`;
 }

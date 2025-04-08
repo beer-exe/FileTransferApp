@@ -21,97 +21,122 @@ public class FileUploadController : ControllerBase
     [HttpPost("upload-chunk")]
     public async Task<IActionResult> UploadChunk([FromForm] IFormFile chunk, [FromForm] string fileName, [FromForm] int chunkIndex, [FromForm] int totalChunks)
     {
-        if (chunk == null || chunk.Length == 0)
-            return BadRequest("Chunk không hợp lệ.");
-
-        string tempFilePath = Path.Combine(_uploadTempPath, $"{fileName}.part{chunkIndex}");
-
-        using (var stream = new FileStream(tempFilePath, FileMode.Create))
+        try
         {
-            await chunk.CopyToAsync(stream);
-        }
+            if (chunk == null || chunk.Length == 0)
+                return BadRequest("Chunk không hợp lệ.");
 
-        return Ok(new { message = $"Chunk {chunkIndex}/{totalChunks} uploaded successfully." });
+            string tempFilePath = Path.Combine(_uploadTempPath, $"{fileName}.part{chunkIndex}");
+
+            using (var stream = new FileStream(tempFilePath, FileMode.Create))
+            {
+                await chunk.CopyToAsync(stream);
+            }
+
+            return Ok(new { message = $"Chunk {chunkIndex}/{totalChunks} uploaded successfully." });
+
+        }
+        catch (SqlException ex)
+        {
+            return StatusCode(500, new { message = "Lỗi server, vui lòng thử lại sau." });
+        }
     }
 
     [HttpGet("check-chunk")]
     public IActionResult CheckChunk([FromQuery] string fileName, [FromQuery] int chunkIndex)
     {
-        string chunkPath = Path.Combine(_uploadTempPath, $"{fileName}.part{chunkIndex}");
-
-        if (System.IO.File.Exists(chunkPath))
+        try
         {
-            return Ok(new { exists = true });
+            string chunkPath = Path.Combine(_uploadTempPath, $"{fileName}.part{chunkIndex}");
+
+            if (System.IO.File.Exists(chunkPath))
+            {
+                return Ok(new { exists = true });
+            }
+
+            return Ok(new { exists = false });
+
         }
-        return Ok(new { exists = false });
+        catch (SqlException ex)
+        {
+            return StatusCode(500, new { message = "Lỗi server, vui lòng thử lại sau." });
+        }
     }
 
     [HttpPost("merge-chunks")]
     public async Task<IActionResult> MergeChunks([FromForm] string fileName, [FromForm] int totalChunks)
     {
-        string finalFilePath = Path.Combine(_finalUploadPath, fileName);
-
-        using (FileStream finalFileStream = new FileStream(finalFilePath, FileMode.Create))
+        try
         {
-            for (int i = 0; i < totalChunks; i++)
+            string finalFilePath = Path.Combine(_finalUploadPath, fileName);
+
+            using (FileStream finalFileStream = new FileStream(finalFilePath, FileMode.Create))
             {
-                string chunkPath = Path.Combine(_uploadTempPath, $"{fileName}.part{i}");
-
-                if (!System.IO.File.Exists(chunkPath))
-                    return BadRequest($"Chunk {i} missing!");
-
-                byte[] chunkData = await System.IO.File.ReadAllBytesAsync(chunkPath);
-                await finalFileStream.WriteAsync(chunkData, 0, chunkData.Length);
-
-                System.IO.File.Delete(chunkPath); 
-            }
-        }
-
-        int newFileId;
-        byte[] fileData = await System.IO.File.ReadAllBytesAsync(finalFilePath);
-
-        using (SqlConnection conn = new SqlConnection(_connectionString))
-        {
-            conn.Open();
-
-            string checkDeletedIdsQuery = "SELECT TOP 1 FileID FROM DeletedFileIDs ORDER BY FileID ASC";
-            using (SqlCommand checkCmd = new SqlCommand(checkDeletedIdsQuery, conn))
-            {
-                object result = checkCmd.ExecuteScalar();
-                if (result != null)
+                for (int i = 0; i < totalChunks; i++)
                 {
-                    newFileId = (int)result;
-                    string deleteFromDeletedIdsQuery = "DELETE FROM DeletedFileIDs WHERE FileID = @FileID";
-                    using (SqlCommand deleteCmd = new SqlCommand(deleteFromDeletedIdsQuery, conn))
-                    {
-                        deleteCmd.Parameters.AddWithValue("@FileID", newFileId);
-                        deleteCmd.ExecuteNonQuery();
-                    }
-                }
-                else
-                {
-                    string getMaxIdQuery = "SELECT ISNULL(MAX(FileID), 0) + 1 FROM FileStorage";
-                    using (SqlCommand getMaxIdCmd = new SqlCommand(getMaxIdQuery, conn))
-                    {
-                        newFileId = (int)getMaxIdCmd.ExecuteScalar();
-                    }
+                    string chunkPath = Path.Combine(_uploadTempPath, $"{fileName}.part{i}");
+
+                    if (!System.IO.File.Exists(chunkPath))
+                        return BadRequest($"Chunk {i} missing!");
+
+                    byte[] chunkData = await System.IO.File.ReadAllBytesAsync(chunkPath);
+                    await finalFileStream.WriteAsync(chunkData, 0, chunkData.Length);
+
+                    System.IO.File.Delete(chunkPath);
                 }
             }
 
-            string insertQuery = "INSERT INTO FileStorage (FileID, FileName, FileType, FileData, CreatedAt) VALUES (@FileID, @FileName, @FileType, @FileData, SYSDATETIME())";
-            using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
+            int newFileId;
+            byte[] fileData = await System.IO.File.ReadAllBytesAsync(finalFilePath);
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                insertCmd.Parameters.AddWithValue("@FileID", newFileId);
-                insertCmd.Parameters.AddWithValue("@FileName", fileName);
-                insertCmd.Parameters.AddWithValue("@FileType", "application/octet-stream");
-                insertCmd.Parameters.AddWithValue("@FileData", fileData);
-                insertCmd.ExecuteNonQuery();
+                conn.Open();
+
+                string checkDeletedIdsQuery = "SELECT TOP 1 FileID FROM DeletedFileIDs ORDER BY FileID ASC";
+                using (SqlCommand checkCmd = new SqlCommand(checkDeletedIdsQuery, conn))
+                {
+                    object result = checkCmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        newFileId = (int)result;
+                        string deleteFromDeletedIdsQuery = "DELETE FROM DeletedFileIDs WHERE FileID = @FileID";
+                        using (SqlCommand deleteCmd = new SqlCommand(deleteFromDeletedIdsQuery, conn))
+                        {
+                            deleteCmd.Parameters.AddWithValue("@FileID", newFileId);
+                            deleteCmd.ExecuteNonQuery();
+                        }
+                    }
+                    else
+                    {
+                        string getMaxIdQuery = "SELECT ISNULL(MAX(FileID), 0) + 1 FROM FileStorage";
+                        using (SqlCommand getMaxIdCmd = new SqlCommand(getMaxIdQuery, conn))
+                        {
+                            newFileId = (int)getMaxIdCmd.ExecuteScalar();
+                        }
+                    }
+                }
+
+                string insertQuery = "INSERT INTO FileStorage (FileID, FileName, FileType, FileData, CreatedAt) VALUES (@FileID, @FileName, @FileType, @FileData, SYSDATETIME())";
+                using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
+                {
+                    insertCmd.Parameters.AddWithValue("@FileID", newFileId);
+                    insertCmd.Parameters.AddWithValue("@FileName", fileName);
+                    insertCmd.Parameters.AddWithValue("@FileType", "application/octet-stream");
+                    insertCmd.Parameters.AddWithValue("@FileData", fileData);
+                    insertCmd.ExecuteNonQuery();
+                }
+
+                conn.Close();
             }
+            System.IO.File.Delete(finalFilePath);
 
-            conn.Close();
+            return Ok(new { message = "File" + fileName + " tải lên thành công.", fileId = newFileId });
+
         }
-        System.IO.File.Delete(finalFilePath);
-
-        return Ok(new { message = "File"+ fileName +" tải lên thành công.", fileId = newFileId });
+        catch (SqlException ex)
+        {
+            return StatusCode(500, new { message = "Lỗi server, vui lòng thử lại sau." });
+        }
     }
 }

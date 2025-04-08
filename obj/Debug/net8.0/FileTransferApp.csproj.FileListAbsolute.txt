@@ -80,3 +80,4 @@ D:\FileTransferApp\obj\Debug\net8.0\refint\FileTransferApp.dll
 D:\FileTransferApp\obj\Debug\net8.0\FileTransferApp.pdb
 D:\FileTransferApp\obj\Debug\net8.0\FileTransferApp.genruntimeconfig.cache
 D:\FileTransferApp\obj\Debug\net8.0\ref\FileTransferApp.dll
+D:\FileTransferApp\obj\Debug\net8.0\FileTransferApp.sourcelink.json
