@@ -1,24 +1,31 @@
 const API_BASE = 'http://171.248.83.156:5000/api/files';
+const maxFileSize = 1024 * 1024 * 1024; // 1GB
+const chunkSize = 5 * 1024 * 1024; // 5MB
 
-async function uploadFile() {
+async function uploadFile() 
+{
     let fileInput = document.getElementById('fileInput').files[0];
-    if (!fileInput) {
+    
+    if (!fileInput) 
+    {
         alert("Vui lòng chọn file!");
         return;
     }
 
-    const maxFileSize = 1024 * 1024 * 1024; // 1GB
-    if (fileInput.size > maxFileSize) {
+    if (fileInput.size > maxFileSize) 
+    {
         alert("Vui lòng chỉ tải lên file nhỏ hơn 1GB.");
         return;
     }
 
-    const chunkSize = 5 * 1024 * 1024; // 5MB per chunk
+    const progressBar = document.getElementById("progressBar");
+    document.getElementById("progressBar").style.display = 'block';
+
     const totalChunks = Math.ceil(fileInput.size / chunkSize);
     const fileName = fileInput.name;
 
-    for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) {
-
+    for (let chunkIndex = 0; chunkIndex < totalChunks; chunkIndex++) 
+    {
         let start = chunkIndex * chunkSize;
         let end = Math.min(start + chunkSize, fileInput.size);
         let chunk = fileInput.slice(start, end);
@@ -26,12 +33,12 @@ async function uploadFile() {
         let checkResponse = await fetch(`${API_BASE}/upload/check-chunk?fileName=${fileName}&chunkIndex=${chunkIndex}`);
         let checkResult = await checkResponse.json();
 
-        if (checkResult.exists) {
+        if (checkResult.exists) 
+        {
             console.log(`Chunk ${chunkIndex} đã tồn tại, bỏ qua upload.`);
             continue;
         }
 
-        // Nếu chunk chưa có, tiến hành upload
         let formData = new FormData();
         formData.append("chunk", chunk);
         formData.append("fileName", fileName);
@@ -39,28 +46,55 @@ async function uploadFile() {
         formData.append("totalChunks", totalChunks);
 
         let uploadSuccess = false;
-        let retries = 3; // Số lần thử lại nếu upload thất bại
+        let retries = 3;
 
-        while (!uploadSuccess && retries > 0) {
-            try {
-                let response = await fetch(API_BASE+"/upload/upload-chunk", {
-                    method: "POST",
-                    body: formData
-                });
-
-                if (response.ok) {
-                    let result = await response.json();
-                    console.log(result.message);
-                    uploadSuccess = true;
-                }
-                else
+        while (!uploadSuccess && retries > 0) 
+        {
+            try 
+            {
+                await new Promise((resolve, reject) => 
                 {
-                    throw new Error("Upload chunk lỗi, thử lại...");
-                }
-            } catch (error) {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("POST", `${API_BASE}/upload/upload-chunk`, true);
+
+                    xhr.upload.onprogress = function (e) 
+                    {
+                        if (e.lengthComputable) 
+                        {
+                            const totalUploaded = (chunkIndex * chunkSize + e.loaded);
+                            const percentComplete = (totalUploaded / fileInput.size) * 100;
+                            progressBar.value = percentComplete;
+                        }
+                    };
+
+                    xhr.onload = function () 
+                    {
+                        if (xhr.status === 200) 
+                        {
+                            const result = JSON.parse(xhr.responseText);
+                            console.log(result.message);
+                            uploadSuccess = true;
+                            resolve();
+                        } 
+                        else 
+                        {
+                            reject("Lỗi từ server.");
+                        }
+                    };
+
+                    xhr.onerror = function () 
+                    {
+                        reject("Lỗi mạng.");
+                    };
+
+                    xhr.send(formData);
+                });
+            } 
+            catch (error) 
+            {
                 console.error(`Lỗi upload chunk ${chunkIndex}:`, error);
                 retries--;
-                await new Promise(resolve => setTimeout(resolve, 2000)); // Đợi 2s trước khi thử lại
+                await new Promise(resolve => setTimeout(resolve, 2000));
             }
         }
 
@@ -70,19 +104,24 @@ async function uploadFile() {
         }
     }
 
-    // Sau khi upload xong, gửi yêu cầu merge file
+    // Merge file sau khi upload xong
     let mergeFormData = new FormData();
     mergeFormData.append("fileName", fileName);
     mergeFormData.append("totalChunks", totalChunks);
 
-    let mergeResponse = await fetch(API_BASE+"/upload/merge-chunks", {
+    let mergeResponse = await fetch(`${API_BASE}/upload/merge-chunks`, 
+    {
         method: "POST",
         body: mergeFormData
     });
 
     let mergeResult = await mergeResponse.json();
     alert(mergeResult.message);
+    progressBar.value = 0;
+    document.getElementById("progressBar").style.display = 'none';
+
 }
+
 
 async function downloadFile() {
     const fileName = document.getElementById("fileName").value;

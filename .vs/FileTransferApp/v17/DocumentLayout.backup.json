@@ -1,12 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\FileTransferApp\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{9B40C35D-D1EA-47CA-B257-B1BE815F7584}|FileTransferApp.csproj|d:\\filetransferapp\\controllers\\filedownloadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9B40C35D-D1EA-47CA-B257-B1BE815F7584}|FileTransferApp.csproj|solutionrelative:controllers\\filedownloadcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -14,24 +9,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "FileDownloadController.cs",
-              "DocumentMoniker": "D:\\FileTransferApp\\Controllers\\FileDownloadController.cs",
-              "RelativeDocumentMoniker": "Controllers\\FileDownloadController.cs",
-              "ToolTip": "D:\\FileTransferApp\\Controllers\\FileDownloadController.cs*",
-              "RelativeToolTip": "Controllers\\FileDownloadController.cs*",
-              "ViewState": "AgIAABwAAAAAAAAAAAAqwD8AAABLAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-08T15:22:51.014Z",
-              "EditorCaption": ""
             }
           ]
         }
