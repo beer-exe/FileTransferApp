@@ -1,4 +1,4 @@
-const API_BASE = 'http://171.248.83.156:5000/api/files';
+const API_BASE = 'http://115.77.92.93:5000/api/files';
 const maxFileSize = 1024 * 1024 * 1024; // 1GB
 const chunkSize = 5 * 1024 * 1024; // 5MB
 
@@ -141,3 +141,39 @@ async function downloadFile() {
 
     window.location.href = `${API_BASE}/download/download-file/${fileName}`;
 }
+
+async function toggleFileList(button) {
+    const container = document.getElementById("fileListContainer");
+    const isVisible = container.style.display === "block";
+
+    if (!isVisible) {
+        try {
+            // Gọi API backend
+            const response = await fetch(API_BASE);
+            const files = await response.json();
+
+            const tbody = document.getElementById("fileTable").querySelector("tbody");
+            tbody.innerHTML = "";
+
+            files.forEach(file => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${file.fileID}</td>
+                    <td>${file.fileName}</td>
+                    <td>${new Date(file.createdAt).toLocaleString()}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            container.style.display = "block";
+            button.textContent = "Hide";
+        } catch (error) {
+            alert("Không thể tải danh sách file từ server.");
+            console.error(error);
+        }
+    } else {
+        container.style.display = "none";
+        button.textContent = "Show";
+    }
+}
+

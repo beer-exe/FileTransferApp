@@ -9,6 +9,7 @@
 </head>
 
 <body>
+
     <div class="container">
         <h2>Upload File</h2>
         <input type="file" id="fileInput">
@@ -20,6 +21,28 @@
         <h2>Download File</h2>
         <input type="text" id="fileName" placeholder="Nhập tên file">
         <button onclick="downloadFile()">Download</button>
+
+        <br><br>
+
+        <h2>List of Files</h2>
+
+        <button onclick="toggleFileList(this)">Show</button>
+
+        <div id="fileListContainer" style="display: none; margin-top: 20px;">
+            <table id="fileTable">
+                <thead>
+                    <tr>
+                        <th>File ID</th>
+                        <th>File Name</th>
+                        <th>Upload Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data will be added here using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
 </body>
