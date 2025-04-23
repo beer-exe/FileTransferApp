@@ -5,17 +5,13 @@ using System.Data.SqlClient;
 [ApiController]
 public class FileUploadController : ControllerBase
 {
-    private readonly string _uploadTempPath;
-    private readonly string _finalUploadPath; 
     private readonly string _connectionString;
+
+    private static Dictionary<string, List<byte[]>> _inMemoryChunks = new();
 
     public FileUploadController(IConfiguration configuration)
     {
         _connectionString = "Server=DESKTOP-IB2ECCK\\SQLEXPRESS;Database=FileStorageDB;Trusted_Connection=True;";
-        _uploadTempPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Temp");
-        _finalUploadPath = Path.Combine(Directory.GetCurrentDirectory(), "Uploads", "Final");
-        Directory.CreateDirectory(_uploadTempPath);
-        Directory.CreateDirectory(_finalUploadPath);
     }
 
     [HttpPost("upload-chunk")]
@@ -26,19 +22,24 @@ public class FileUploadController : ControllerBase
             if (chunk == null || chunk.Length == 0)
                 return BadRequest("Chunk không hợp lệ.");
 
-            string tempFilePath = Path.Combine(_uploadTempPath, $"{fileName}.part{chunkIndex}");
+            using MemoryStream memoryStream = new MemoryStream();
+            await chunk.CopyToAsync(memoryStream);
+            byte[] chunkBytes = memoryStream.ToArray();
 
-            using (var stream = new FileStream(tempFilePath, FileMode.Create))
+            lock (_inMemoryChunks)
             {
-                await chunk.CopyToAsync(stream);
+                if (!_inMemoryChunks.ContainsKey(fileName))
+                {
+                    _inMemoryChunks[fileName] = new List<byte[]>(new byte[totalChunks][]);
+                }
+                _inMemoryChunks[fileName][chunkIndex] = chunkBytes;
             }
 
             return Ok(new { message = $"Chunk {chunkIndex}/{totalChunks} uploaded successfully." });
-
         }
-        catch (SqlException ex)
+        catch (SqlException)
         {
-            return StatusCode(500, new { message = "Lỗi server, vui lòng thử lại sau." });
+            return StatusCode(500, new { message = "Server error, please try again later." });
         }
     }
 
@@ -47,19 +48,19 @@ public class FileUploadController : ControllerBase
     {
         try
         {
-            string chunkPath = Path.Combine(_uploadTempPath, $"{fileName}.part{chunkIndex}");
-
-            if (System.IO.File.Exists(chunkPath))
+            lock (_inMemoryChunks)
             {
-                return Ok(new { exists = true });
+                if (_inMemoryChunks.ContainsKey(fileName) && _inMemoryChunks[fileName].Count > chunkIndex && _inMemoryChunks[fileName][chunkIndex] != null)
+                {
+                    return Ok(new { exists = true });
+                }
             }
 
             return Ok(new { exists = false });
-
         }
-        catch (SqlException ex)
+        catch (SqlException)
         {
-            return StatusCode(500, new { message = "Lỗi server, vui lòng thử lại sau." });
+            return StatusCode(500, new { message = "Server error, please try again later." });
         }
     }
 
@@ -68,26 +69,21 @@ public class FileUploadController : ControllerBase
     {
         try
         {
-            string finalFilePath = Path.Combine(_finalUploadPath, fileName);
+            if (!_inMemoryChunks.ContainsKey(fileName))
+                return BadRequest("Temporary data not found in memory.");
 
-            using (FileStream finalFileStream = new FileStream(finalFilePath, FileMode.Create))
+            List<byte[]> chunks = _inMemoryChunks[fileName];
+            if (chunks.Count != totalChunks || chunks.Any(c => c == null))
+                return BadRequest("Missing chunk or incomplete data.");
+
+            using MemoryStream finalMemoryStream = new MemoryStream();
+            foreach (byte[] chunk in chunks)
             {
-                for (int i = 0; i < totalChunks; i++)
-                {
-                    string chunkPath = Path.Combine(_uploadTempPath, $"{fileName}.part{i}");
-
-                    if (!System.IO.File.Exists(chunkPath))
-                        return BadRequest($"Chunk {i} missing!");
-
-                    byte[] chunkData = await System.IO.File.ReadAllBytesAsync(chunkPath);
-                    await finalFileStream.WriteAsync(chunkData, 0, chunkData.Length);
-
-                    System.IO.File.Delete(chunkPath);
-                }
+                await finalMemoryStream.WriteAsync(chunk, 0, chunk.Length);
             }
 
+            byte[] fileData = finalMemoryStream.ToArray();
             int newFileId;
-            byte[] fileData = await System.IO.File.ReadAllBytesAsync(finalFilePath);
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -129,14 +125,14 @@ public class FileUploadController : ControllerBase
 
                 conn.Close();
             }
-            System.IO.File.Delete(finalFilePath);
 
-            return Ok(new { message = "File" + fileName + " tải lên thành công.", fileId = newFileId });
+            _inMemoryChunks.Remove(fileName);
 
+            return Ok(new { message = "File " + fileName + " uploaded successfully.", fileId = newFileId });
         }
-        catch (SqlException ex)
+        catch (SqlException)
         {
-            return StatusCode(500, new { message = "Lỗi server, vui lòng thử lại sau." });
+            return StatusCode(500, new { message = "Server error, please try again later." });
         }
     }
 }

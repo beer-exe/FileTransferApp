@@ -30,9 +30,9 @@ namespace FileTransferApp.Controllers
                         int count = (int)cmd.ExecuteScalar();
 
                         if (count == 0)
-                            return NotFound(new { message = $"File '{fileName}' không tồn tại!" });
+                            return NotFound(new { message = $"File '{fileName}' not exists!" });
 
-                        return Ok(new { message = "File tồn tại." });
+                        return Ok(new { message = "File exists." });
                     }
 
                     conn.Close();
@@ -40,7 +40,7 @@ namespace FileTransferApp.Controllers
                 }
                 catch (SqlException ex)
                 {
-                    return StatusCode(500, new { message = "Lỗi server, vui lòng thử lại sau." });
+                    return StatusCode(500, new { message = "Server error, please try again later." });
                 }
             }
         }
@@ -65,7 +65,7 @@ namespace FileTransferApp.Controllers
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (!reader.Read())
-                                return NotFound(new { message = "File '" + fileName + "' không tồn tại!" });
+                                return NotFound(new { message = "File '" + fileName + "' not exists!" });
 
                             fileId = reader.GetInt32(0);
                             fileData = (byte[])reader["FileData"];
@@ -95,7 +95,7 @@ namespace FileTransferApp.Controllers
             }
             catch (SqlException ex)
             {
-                return StatusCode(500, new { message = "Lỗi server, vui lòng thử lại sau." });
+                return StatusCode(500, new { message = "Server error, please try again later." });
             }
         }
     }

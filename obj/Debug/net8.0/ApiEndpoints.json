@@ -1,8 +1,40 @@
 [
   {
-    "ContainingType": "FileController",
+    "ContainingType": "FileTransferApp.Controllers.FileDownloadController",
+    "Method": "CheckFileExists",
+    "RelativePath": "api/files/download/check-file/{fileName}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fileName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FileTransferApp.Controllers.FileDownloadController",
+    "Method": "DownloadFile",
+    "RelativePath": "api/files/download/download-file/{fileName}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "fileName",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "FileUploadController",
     "Method": "CheckChunk",
-    "RelativePath": "api/files/check-chunk",
+    "RelativePath": "api/files/upload/check-chunk",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -21,25 +53,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "FileController",
-    "Method": "DownloadFile",
-    "RelativePath": "api/files/download/{fileName}",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "fileName",
-        "Type": "System.String",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "FileController",
+    "ContainingType": "FileUploadController",
     "Method": "MergeChunks",
-    "RelativePath": "api/files/merge-chunks",
+    "RelativePath": "api/files/upload/merge-chunks",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -58,9 +74,9 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "FileController",
+    "ContainingType": "FileUploadController",
     "Method": "UploadChunk",
-    "RelativePath": "api/files/upload-chunk",
+    "RelativePath": "api/files/upload/upload-chunk",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
