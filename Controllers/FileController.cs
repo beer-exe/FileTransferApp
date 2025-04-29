@@ -1,18 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 namespace FileTransferApp.Controllers
 {
     [Route("api/files")]
     [ApiController]
+
     public class FileController : ControllerBase
     {
-        private readonly string _connectionString;
+        private static readonly string _connectionString = "Server=DESKTOP-IB2ECCK\\SQLEXPRESS;Database=FileStorageDB;Trusted_Connection=True;Encrypt=false;TrustServerCertificate=true;";
 
-        public FileController(IConfiguration configuration)
-        {
-            _connectionString = "Server=DESKTOP-IB2ECCK\\SQLEXPRESS;Database=FileStorageDB;Trusted_Connection=True;";
-        }
+        public FileController(IConfiguration configuration) { }
 
         [HttpGet]
         public IActionResult GetFiles()
